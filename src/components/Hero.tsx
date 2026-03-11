@@ -25,7 +25,7 @@ export default function Hero() {
 
         {/* Main title — big, raw */}
         <h1 className="text-[4rem] sm:text-[8rem] lg:text-[10rem] font-bold tracking-[-0.05em] leading-[0.85] mb-4 sm:mb-6">
-          <span className="text-accent">Miiir</span>
+          <span className="text-accent">415miiir</span>
         </h1>
 
         <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-6 sm:gap-12 mb-10 sm:mb-14">

@@ -19,12 +19,12 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  title: "Miiir Beats | Producer, Songwriter, Artist",
+  title: "415miiir Beats | Producer, Songwriter, Artist",
   description:
-    "Browse and license beats from Miiir — Bay Area producer with 107M+ streams. Basic leases, ultimate leases, and exclusive buyouts.",
+    "Browse and license beats from 415miiir — Bay Area producer with 107M+ streams. Basic leases, ultimate leases, and exclusive buyouts.",
   openGraph: {
-    title: "Miiir Beats",
-    description: "Premium beats from Miiir. 107M+ streams. Bay Area.",
+    title: "415miiir Beats",
+    description: "Premium beats from 415miiir. 107M+ streams. Bay Area.",
     type: "website",
   },
 };

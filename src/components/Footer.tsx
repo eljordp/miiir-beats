@@ -6,7 +6,7 @@ export default function Footer() {
           {/* Brand */}
           <div>
             <h3 className="text-2xl font-bold tracking-[-0.03em] mb-2">
-              <span className="text-accent">Miiir</span>
+              <span className="text-accent">415miiir</span>
             </h3>
             <p className="text-xs sm:text-sm text-muted leading-relaxed">
               Producer, Songwriter, Artist.<br />
@@ -77,7 +77,7 @@ export default function Footer() {
 
         <div className="mt-10 sm:mt-12 pt-6 sm:pt-8 border-t border-border flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4">
           <p className="text-[10px] text-muted/50">
-            &copy; {new Date().getFullYear()} Miiir. All rights reserved.
+            &copy; {new Date().getFullYear()} 415miiir. All rights reserved.
           </p>
           <p className="text-[10px] text-muted/30">
             Built by JDLO
