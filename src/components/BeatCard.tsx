@@ -9,24 +9,36 @@ interface BeatCardProps {
   onLicense: (beat: Beat) => void;
 }
 
+const gradients = [
+  "from-accent/20 via-surface to-background",
+  "from-purple-900/30 via-surface to-background",
+  "from-red-900/20 via-surface to-background",
+  "from-blue-900/20 via-surface to-background",
+  "from-amber-900/20 via-surface to-background",
+  "from-emerald-900/20 via-surface to-background",
+  "from-pink-900/20 via-surface to-background",
+  "from-cyan-900/20 via-surface to-background",
+];
+
 export default function BeatCard({ beat, isPlaying, onPlay, onLicense }: BeatCardProps) {
+  const gradientIdx = (parseInt(beat.id) - 1) % gradients.length;
+
   return (
-    <div className="group bg-surface border border-border rounded-xl p-3 sm:p-4 hover:border-accent/30 transition-all duration-300 active:scale-[0.98] sm:active:scale-100 sm:hover:glow-accent">
+    <div className="group bg-surface border border-border rounded-sm overflow-hidden hover:border-accent/20 transition-all duration-300 active:scale-[0.98] sm:active:scale-100">
       {/* Beat image / play area */}
       <div
-        className="relative aspect-square rounded-lg bg-surface-light mb-3 sm:mb-4 overflow-hidden cursor-pointer"
+        className="relative aspect-square bg-surface-light cursor-pointer overflow-hidden"
         onClick={onPlay}
       >
-        {/* Placeholder gradient for beat art */}
-        <div className="absolute inset-0 bg-gradient-to-br from-accent/20 via-surface-light to-background" />
+        <div className={`absolute inset-0 bg-gradient-to-br ${gradients[gradientIdx]}`} />
 
-        {/* Play button overlay — always visible on mobile */}
-        <div className="absolute inset-0 flex items-center justify-center bg-black/20 sm:bg-black/0 sm:group-hover:bg-black/30 transition-colors">
+        {/* Play button overlay */}
+        <div className="absolute inset-0 flex items-center justify-center bg-black/10 sm:bg-black/0 sm:group-hover:bg-black/30 transition-colors">
           <div
             className={`w-11 h-11 sm:w-14 sm:h-14 rounded-full flex items-center justify-center transition-all ${
               isPlaying
                 ? "bg-accent text-background scale-100"
-                : "bg-white/20 sm:bg-white/10 text-white scale-100 sm:scale-90 sm:group-hover:scale-100"
+                : "bg-white/15 text-white scale-100 sm:scale-90 sm:group-hover:scale-100"
             }`}
           >
             {isPlaying ? (
@@ -47,41 +59,43 @@ export default function BeatCard({ beat, isPlaying, onPlay, onLicense }: BeatCar
           </div>
         </div>
 
-        {/* BPM badge */}
-        <div className="absolute top-2 right-2 sm:top-3 sm:right-3 px-1.5 sm:px-2 py-0.5 sm:py-1 bg-black/60 backdrop-blur-sm rounded text-[10px] sm:text-xs text-foreground/80">
-          {beat.bpm} BPM
+        {/* BPM + Key badge */}
+        <div className="absolute top-2 left-2 sm:top-3 sm:left-3 flex gap-1">
+          <span className="px-1.5 py-0.5 bg-black/70 text-[9px] sm:text-[10px] text-foreground/70 uppercase tracking-wider">
+            {beat.bpm}
+          </span>
+          <span className="px-1.5 py-0.5 bg-black/70 text-[9px] sm:text-[10px] text-foreground/70 uppercase tracking-wider">
+            {beat.key}
+          </span>
         </div>
       </div>
 
       {/* Beat info */}
-      <h3 className="font-semibold text-foreground text-sm sm:text-base mb-0.5 sm:mb-1 truncate">{beat.title}</h3>
-      <div className="flex items-center gap-2 mb-2 sm:mb-3">
-        <span className="text-[10px] sm:text-xs text-foreground/40">{beat.key}</span>
-        <span className="text-[10px] sm:text-xs text-foreground/20">&middot;</span>
-        <span className="text-[10px] sm:text-xs text-foreground/40">{beat.duration}</span>
-      </div>
+      <div className="p-3 sm:p-4">
+        <h3 className="font-semibold text-foreground text-xs sm:text-sm mb-1 truncate">{beat.title}</h3>
 
-      {/* Tags — hide on very small cards */}
-      <div className="hidden xs:flex flex-wrap gap-1 sm:gap-1.5 mb-3 sm:mb-4">
-        {beat.tags.map((tag) => (
-          <span
-            key={tag}
-            className="text-[9px] sm:text-[10px] px-1.5 sm:px-2 py-0.5 rounded-full bg-accent/10 text-accent/70 uppercase tracking-wider"
+        {/* Tags */}
+        <div className="flex flex-wrap gap-1.5 mb-3">
+          {beat.tags.slice(0, 2).map((tag) => (
+            <span
+              key={tag}
+              className="text-[8px] sm:text-[9px] text-muted uppercase tracking-wider"
+            >
+              {tag}
+            </span>
+          ))}
+        </div>
+
+        {/* Price + License button */}
+        <div className="flex items-center justify-between">
+          <span className="text-accent font-bold text-xs sm:text-sm">${beat.pricing.basic}+</span>
+          <button
+            onClick={() => onLicense(beat)}
+            className="px-3 py-1.5 text-[9px] sm:text-[10px] font-bold bg-accent/10 text-accent uppercase tracking-wider hover:bg-accent hover:text-background active:bg-accent active:text-background transition-colors"
           >
-            {tag}
-          </span>
-        ))}
-      </div>
-
-      {/* Price + License button */}
-      <div className="flex items-center justify-between">
-        <span className="text-accent font-bold text-sm sm:text-base">${beat.pricing.basic}</span>
-        <button
-          onClick={() => onLicense(beat)}
-          className="px-3 sm:px-4 py-1.5 text-[10px] sm:text-xs font-semibold bg-accent/10 text-accent rounded-full hover:bg-accent hover:text-background active:bg-accent active:text-background transition-colors"
-        >
-          License
-        </button>
+            License
+          </button>
+        </div>
       </div>
     </div>
   );
