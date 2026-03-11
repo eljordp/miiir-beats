@@ -16,17 +16,22 @@ export default function LicenseModal({ beat, onClose }: LicenseModalProps) {
   const tiers: LicenseType[] = ["basic", "ultimate", "exclusive"];
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+    <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center sm:p-4">
       {/* Backdrop */}
       <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" onClick={onClose} />
 
-      {/* Modal */}
-      <div className="relative bg-surface border border-border rounded-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto">
+      {/* Modal — slides up on mobile like a sheet */}
+      <div className="relative bg-surface border-t sm:border border-border rounded-t-2xl sm:rounded-2xl w-full sm:max-w-2xl max-h-[85vh] sm:max-h-[90vh] overflow-y-auto">
+        {/* Mobile drag indicator */}
+        <div className="sm:hidden flex justify-center pt-3 pb-1">
+          <div className="w-10 h-1 rounded-full bg-foreground/20" />
+        </div>
+
         {/* Header */}
-        <div className="p-6 border-b border-border flex items-center justify-between">
+        <div className="px-5 sm:px-6 pt-3 sm:pt-6 pb-4 sm:pb-6 border-b border-border flex items-center justify-between">
           <div>
-            <h2 className="text-xl font-bold">{beat.title}</h2>
-            <p className="text-sm text-foreground/40 mt-1">
+            <h2 className="text-lg sm:text-xl font-bold">{beat.title}</h2>
+            <p className="text-xs sm:text-sm text-foreground/40 mt-1">
               {beat.bpm} BPM &middot; {beat.key} &middot; {beat.duration}
             </p>
           </div>
@@ -41,10 +46,11 @@ export default function LicenseModal({ beat, onClose }: LicenseModalProps) {
         </div>
 
         {/* License tiers */}
-        <div className="p-6">
-          <p className="text-sm text-foreground/50 mb-6">Choose your license type:</p>
+        <div className="px-5 sm:px-6 py-5 sm:py-6">
+          <p className="text-xs sm:text-sm text-foreground/50 mb-4 sm:mb-6">Choose your license type:</p>
 
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          {/* Horizontal scroll on mobile, grid on desktop */}
+          <div className="flex sm:grid sm:grid-cols-3 gap-3 sm:gap-4 overflow-x-auto pb-2 sm:pb-0 -mx-5 px-5 sm:mx-0 sm:px-0 snap-x snap-mandatory sm:snap-none">
             {tiers.map((tier) => {
               const details = licenseDetails[tier];
               const price = beat.pricing[tier];
@@ -55,7 +61,7 @@ export default function LicenseModal({ beat, onClose }: LicenseModalProps) {
                 <button
                   key={tier}
                   onClick={() => setSelected(tier)}
-                  className={`relative text-left p-5 rounded-xl border-2 transition-all ${
+                  className={`relative text-left p-4 sm:p-5 rounded-xl border-2 transition-all flex-shrink-0 w-[70vw] sm:w-auto snap-center ${
                     isSelected
                       ? "border-accent bg-accent/5 glow-accent"
                       : "border-border hover:border-foreground/20"
@@ -66,17 +72,17 @@ export default function LicenseModal({ beat, onClose }: LicenseModalProps) {
                       Best Value
                     </span>
                   )}
-                  <p className="text-xs text-foreground/50 uppercase tracking-wider mb-2">
+                  <p className="text-[10px] sm:text-xs text-foreground/50 uppercase tracking-wider mb-1 sm:mb-2">
                     {details.name}
                   </p>
-                  <p className="text-2xl font-bold text-foreground mb-4">
+                  <p className="text-xl sm:text-2xl font-bold text-foreground mb-3 sm:mb-4">
                     ${price}
                   </p>
-                  <ul className="space-y-2">
+                  <ul className="space-y-1.5 sm:space-y-2">
                     {details.features.map((feature) => (
-                      <li key={feature} className="flex items-start gap-2 text-xs text-foreground/60">
+                      <li key={feature} className="flex items-start gap-2 text-[11px] sm:text-xs text-foreground/60">
                         <svg
-                          className="w-3.5 h-3.5 text-accent flex-shrink-0 mt-0.5"
+                          className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-accent flex-shrink-0 mt-0.5"
                           fill="none"
                           stroke="currentColor"
                           viewBox="0 0 24 24"
@@ -98,11 +104,11 @@ export default function LicenseModal({ beat, onClose }: LicenseModalProps) {
           </div>
 
           {/* Purchase button */}
-          <div className="mt-8 flex flex-col sm:flex-row items-center gap-4">
-            <button className="w-full sm:w-auto px-8 py-3 bg-accent text-background font-bold rounded-full hover:bg-accent-dim transition-colors">
+          <div className="mt-6 sm:mt-8 flex flex-col items-center gap-3 sm:gap-4 safe-bottom-padding">
+            <button className="w-full sm:w-auto px-8 py-3.5 sm:py-3 bg-accent text-background font-bold rounded-full hover:bg-accent-dim active:scale-[0.98] transition-all text-sm sm:text-base">
               Purchase {licenseDetails[selected].name} — ${beat.pricing[selected]}
             </button>
-            <p className="text-xs text-foreground/30">
+            <p className="text-[10px] sm:text-xs text-foreground/30">
               Instant delivery &middot; Secure payment
             </p>
           </div>

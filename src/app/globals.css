@@ -53,6 +53,26 @@ input[type="range"]::-webkit-slider-thumb {
   cursor: pointer;
 }
 
+/* Safe area insets for notch phones */
+.safe-top {
+  padding-top: env(safe-area-inset-top);
+}
+.safe-bottom {
+  padding-bottom: env(safe-area-inset-bottom);
+}
+.safe-bottom-padding {
+  padding-bottom: env(safe-area-inset-bottom, 8px);
+}
+
+/* Hide scrollbar but keep scroll */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
 /* Glow effect */
 .glow-accent {
   box-shadow: 0 0 20px rgba(0, 255, 136, 0.15);
