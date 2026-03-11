@@ -3,8 +3,8 @@
 @theme inline {
   --color-background: #050505;
   --color-foreground: #e8e8e8;
-  --color-accent: #c8ff00;
-  --color-accent-dim: #a8d600;
+  --color-accent: #ff2d2d;
+  --color-accent-dim: #cc2424;
   --color-surface: #0d0d0d;
   --color-surface-light: #161616;
   --color-border: #1e1e1e;
@@ -87,7 +87,7 @@ input[type="range"]::-webkit-slider-thumb {
 
 /* Glow effect */
 .glow-accent {
-  box-shadow: 0 0 30px rgba(200, 255, 0, 0.1);
+  box-shadow: 0 0 30px rgba(255, 45, 45, 0.1);
 }
 
 /* Waveform animation */

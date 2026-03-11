@@ -7,7 +7,7 @@ export default function Hero() {
   return (
     <section className="relative min-h-[90vh] sm:min-h-[85vh] flex flex-col justify-center overflow-hidden pt-14 sm:pt-16">
       {/* Background — subtle radial, not generic gradient */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_rgba(200,255,0,0.04)_0%,_transparent_60%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_rgba(255,45,45,0.04)_0%,_transparent_60%)]" />
 
       {/* Grid lines for texture */}
       <div className="absolute inset-0 opacity-[0.03]" style={{
