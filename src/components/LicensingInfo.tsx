@@ -2,7 +2,7 @@ import { licenseDetails } from "@/lib/beats";
 
 export default function LicensingInfo() {
   const tiers = [
-    { key: "basic" as const, price: "$29.99", highlight: false },
+    { key: "basic" as const, price: "$79.99", highlight: false },
     { key: "ultimate" as const, price: "$99.99", highlight: false },
     { key: "exclusive" as const, price: "$499.99+", highlight: true },
   ];

@@ -22,7 +22,7 @@ export const beats: Beat[] = [
     tags: ["Bay Area", "Slap", "Dark"],
     duration: "3:24",
     imageUrl: "/beats/beat1.jpg",
-    pricing: { basic: 29.99, ultimate: 99.99, exclusive: 499.99 },
+    pricing: { basic: 79.99, ultimate: 99.99, exclusive: 499.99 },
   },
   {
     id: "2",
@@ -32,7 +32,7 @@ export const beats: Beat[] = [
     tags: ["West Coast", "Melodic", "Drill"],
     duration: "2:58",
     imageUrl: "/beats/beat2.jpg",
-    pricing: { basic: 29.99, ultimate: 99.99, exclusive: 499.99 },
+    pricing: { basic: 79.99, ultimate: 99.99, exclusive: 499.99 },
   },
   {
     id: "3",
@@ -42,7 +42,7 @@ export const beats: Beat[] = [
     tags: ["Trap", "Hard", "808"],
     duration: "3:12",
     imageUrl: "/beats/beat3.jpg",
-    pricing: { basic: 29.99, ultimate: 99.99, exclusive: 499.99 },
+    pricing: { basic: 79.99, ultimate: 99.99, exclusive: 499.99 },
   },
   {
     id: "4",
@@ -52,7 +52,7 @@ export const beats: Beat[] = [
     tags: ["Smooth", "R&B", "Vibe"],
     duration: "3:45",
     imageUrl: "/beats/beat4.jpg",
-    pricing: { basic: 29.99, ultimate: 99.99, exclusive: 499.99 },
+    pricing: { basic: 79.99, ultimate: 99.99, exclusive: 499.99 },
   },
   {
     id: "5",
@@ -62,7 +62,7 @@ export const beats: Beat[] = [
     tags: ["Bay Area", "Bounce", "Slap"],
     duration: "3:08",
     imageUrl: "/beats/beat5.jpg",
-    pricing: { basic: 29.99, ultimate: 99.99, exclusive: 499.99 },
+    pricing: { basic: 79.99, ultimate: 99.99, exclusive: 499.99 },
   },
   {
     id: "6",
@@ -72,7 +72,7 @@ export const beats: Beat[] = [
     tags: ["Drill", "Dark", "Aggressive"],
     duration: "2:42",
     imageUrl: "/beats/beat6.jpg",
-    pricing: { basic: 29.99, ultimate: 99.99, exclusive: 499.99 },
+    pricing: { basic: 79.99, ultimate: 99.99, exclusive: 499.99 },
   },
   {
     id: "7",
@@ -82,7 +82,7 @@ export const beats: Beat[] = [
     tags: ["Smooth", "West Coast", "Chill"],
     duration: "3:30",
     imageUrl: "/beats/beat7.jpg",
-    pricing: { basic: 29.99, ultimate: 99.99, exclusive: 499.99 },
+    pricing: { basic: 79.99, ultimate: 99.99, exclusive: 499.99 },
   },
   {
     id: "8",
@@ -92,7 +92,7 @@ export const beats: Beat[] = [
     tags: ["Bay Area", "Hard", "Street"],
     duration: "3:15",
     imageUrl: "/beats/beat8.jpg",
-    pricing: { basic: 29.99, ultimate: 99.99, exclusive: 499.99 },
+    pricing: { basic: 79.99, ultimate: 99.99, exclusive: 499.99 },
   },
 ];
 

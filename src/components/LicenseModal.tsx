@@ -9,13 +9,18 @@ interface LicenseModalProps {
 }
 
 type LicenseType = "basic" | "ultimate" | "exclusive";
+type PaymentMethod = "cashapp" | "paypal";
+
+const paymentLinks: Record<PaymentMethod, string> = {
+  cashapp: "https://cash.app/$415miiir",
+  paypal: "https://www.paypal.me/415miiir",
+};
 
 export default function LicenseModal({ beat, onClose }: LicenseModalProps) {
   const [selected, setSelected] = useState<LicenseType>("basic");
+  const [payment, setPayment] = useState<PaymentMethod>("cashapp");
 
   const tiers: LicenseType[] = ["basic", "ultimate", "exclusive"];
-
-  const dmUrl = `https://www.instagram.com/415miiir/`;
 
   return (
     <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center sm:p-4">
@@ -105,18 +110,38 @@ export default function LicenseModal({ beat, onClose }: LicenseModalProps) {
             })}
           </div>
 
-          {/* Purchase button — links to Instagram DM */}
-          <div className="mt-6 sm:mt-8 flex flex-col items-center gap-3 sm:gap-4 safe-bottom-padding">
+          {/* Payment method selector */}
+          <div className="mt-6 sm:mt-8">
+            <p className="text-[10px] sm:text-xs text-muted uppercase tracking-wider mb-3">Pay with</p>
+            <div className="flex gap-3">
+              {(["cashapp", "paypal"] as PaymentMethod[]).map((method) => (
+                <button
+                  key={method}
+                  onClick={() => setPayment(method)}
+                  className={`flex-1 py-2.5 border text-xs font-bold uppercase tracking-wider transition-all ${
+                    payment === method
+                      ? "border-accent bg-accent/5 text-foreground"
+                      : "border-border text-muted hover:border-foreground/20"
+                  }`}
+                >
+                  {method === "cashapp" ? "Cash App" : "PayPal"}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Purchase button */}
+          <div className="mt-4 flex flex-col items-center gap-3 safe-bottom-padding">
             <a
-              href={dmUrl}
+              href={paymentLinks[payment]}
               target="_blank"
               rel="noopener noreferrer"
               className="w-full sm:w-auto px-8 py-3.5 sm:py-3 bg-accent text-background font-bold hover:bg-accent-dim active:scale-[0.98] transition-all text-sm sm:text-base text-center uppercase tracking-wider"
             >
-              Get {licenseDetails[selected].name} — ${beat.pricing[selected]}
+              Pay ${beat.pricing[selected]} via {payment === "cashapp" ? "Cash App" : "PayPal"}
             </a>
             <p className="text-[10px] sm:text-xs text-muted text-center">
-              You&apos;ll be directed to Instagram to complete your purchase.
+              After payment, DM <span className="text-foreground/60">@415miiir</span> on Instagram with your receipt.
               <br />
               Mention &ldquo;{beat.title}&rdquo; + {licenseDetails[selected].name}.
             </p>
