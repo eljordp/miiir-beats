@@ -63,15 +63,12 @@ export default function BeatCard({ beat, isPlaying, onPlay, onLicense }: BeatCar
         <span className="text-xs text-muted w-8">{beat.key}</span>
       </div>
 
-      {/* Price */}
-      <span className="text-xs sm:text-sm font-bold text-accent flex-shrink-0">${beat.pricing.basic}+</span>
-
-      {/* License button */}
+      {/* Buy button */}
       <button
         onClick={() => onLicense(beat)}
-        className="flex-shrink-0 px-3 sm:px-4 py-1.5 text-[9px] sm:text-[10px] font-bold uppercase tracking-wider bg-accent/10 text-accent hover:bg-accent hover:text-background active:bg-accent active:text-background transition-colors"
+        className="flex-shrink-0 px-3 sm:px-5 py-2 text-[10px] sm:text-xs font-bold uppercase tracking-wider bg-accent text-background hover:bg-accent-dim active:scale-95 transition-all"
       >
-        License
+        <span className="hidden sm:inline">Buy — </span>${beat.pricing.basic}
       </button>
     </div>
   );
