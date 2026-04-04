@@ -67,8 +67,8 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Beat grid — 2 cols on mobile */}
-            <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
+            {/* Beat list */}
+            <div className="border-t border-border">
               {filteredBeats.map((beat) => (
                 <BeatCard
                   key={beat.id}

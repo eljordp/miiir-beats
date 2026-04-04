@@ -1,8 +1,9 @@
 export default function Hero() {
-  const credits = [
-    "ChaiBenjii", "EBK Jaybo", "Fredo Bagz", "Manza Visuals",
-    "ChaiBenjii", "EBK Jaybo", "Fredo Bagz", "Manza Visuals",
+  const artists = [
+    "EBK Jaaybo", "Mike Sherm", "Babytron", "Jaymoney30", "Daboii",
+    "SlimmyB", "Yhung To", "Fredo Bagz", "Zaybang", "Lil Bean", "Lil Yee",
   ];
+  const credits = [...artists, ...artists];
 
   return (
     <section className="relative min-h-[90vh] sm:min-h-[85vh] flex flex-col justify-center overflow-hidden pt-14 sm:pt-16">

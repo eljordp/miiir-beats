@@ -12,8 +12,8 @@ type LicenseType = "basic" | "ultimate" | "exclusive";
 type PaymentMethod = "cashapp" | "paypal";
 
 const paymentLinks: Record<PaymentMethod, string> = {
-  cashapp: "https://cash.app/$415miiir",
-  paypal: "https://www.paypal.me/415miiir",
+  cashapp: "https://cash.app/$Miiirmadeit",
+  paypal: "https://www.paypal.biz/415miiir",
 };
 
 export default function LicenseModal({ beat, onClose }: LicenseModalProps) {
