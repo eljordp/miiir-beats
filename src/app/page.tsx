@@ -9,6 +9,7 @@ import BeatCard from "@/components/BeatCard";
 import AudioPlayer from "@/components/AudioPlayer";
 import LicenseModal from "@/components/LicenseModal";
 import LicensingInfo from "@/components/LicensingInfo";
+import PopularBeats from "@/components/PopularBeats";
 import Footer from "@/components/Footer";
 
 export default function Home() {
@@ -42,6 +43,9 @@ export default function Home() {
 
       <main className={`min-h-screen ${currentBeat ? "pb-16 sm:pb-20" : ""}`}>
         <Hero />
+
+        {/* Most Popular */}
+        <PopularBeats />
 
         {/* Beat of the Day */}
         <BeatOfDay
