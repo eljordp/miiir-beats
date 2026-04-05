@@ -1,4 +1,8 @@
+"use client";
+
+import { useRef } from "react";
 import { licenseDetails } from "@/lib/beats";
+import { useInView } from "@/hooks/useInView";
 
 export default function LicensingInfo() {
   const tiers = [
@@ -7,16 +11,22 @@ export default function LicensingInfo() {
     { key: "exclusive" as const, price: "$499.99+", highlight: true },
   ];
 
+  const { ref, inView } = useInView();
+
   return (
-    <section id="licensing" className="py-16 sm:py-24 px-5 sm:px-6 border-t border-border">
+    <section
+      id="licensing"
+      ref={ref as React.RefObject<HTMLElement>}
+      className="py-16 sm:py-24 px-5 sm:px-6 border-t border-border"
+    >
       <div className="max-w-5xl mx-auto">
-        <div className="flex items-center gap-3 mb-10 sm:mb-16">
+        <div className={`flex items-center gap-3 mb-10 sm:mb-16 ${inView ? "animate-fade-in delay-0" : "opacity-0"}`}>
           <div className="w-2 h-2 rounded-full bg-accent" />
           <span className="text-[10px] sm:text-xs text-muted uppercase tracking-[0.2em]">Licensing</span>
           <div className="flex-1 h-px bg-border" />
         </div>
 
-        <div className="sm:text-center mb-10 sm:mb-14">
+        <div className={`sm:text-center mb-10 sm:mb-14 ${inView ? "animate-fade-up delay-100" : "opacity-0"}`}>
           <h2 className="text-2xl sm:text-4xl font-bold tracking-[-0.03em] mb-3 sm:mb-4">
             Three tiers. Your choice.
           </h2>
@@ -27,8 +37,9 @@ export default function LicensingInfo() {
 
         {/* Horizontal scroll on mobile, grid on desktop */}
         <div className="flex sm:grid sm:grid-cols-3 gap-4 sm:gap-6 overflow-x-auto pb-4 sm:pb-0 -mx-5 px-5 sm:mx-0 sm:px-0 snap-x snap-mandatory sm:snap-none no-scrollbar">
-          {tiers.map(({ key, price, highlight }) => {
+          {tiers.map(({ key, price, highlight }, i) => {
             const details = licenseDetails[key];
+            const delayClass = i === 0 ? "delay-200" : i === 1 ? "delay-300" : "delay-400";
             return (
               <div
                 key={key}
@@ -36,7 +47,7 @@ export default function LicensingInfo() {
                   highlight
                     ? "border-accent bg-accent/5"
                     : "border-border bg-surface hover:border-foreground/20"
-                }`}
+                } ${inView ? `animate-fade-up ${delayClass}` : "opacity-0"}`}
               >
                 {highlight && (
                   <span className="absolute -top-2.5 left-6 px-2 py-0.5 bg-accent text-background text-[9px] font-bold uppercase tracking-wider">

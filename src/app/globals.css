@@ -100,6 +100,36 @@ input[type="range"]::-webkit-slider-thumb {
   animation: waveform 0.8s ease-in-out infinite;
 }
 
+/* Entrance animations */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-up  { animation: fadeUp   0.55s cubic-bezier(0.22, 1, 0.36, 1) both; }
+.animate-fade-in  { animation: fadeIn   0.55s cubic-bezier(0.22, 1, 0.36, 1) both; }
+.animate-slide-down { animation: slideDown 0.4s cubic-bezier(0.22, 1, 0.36, 1) both; }
+
+.delay-0   { animation-delay: 0s;    }
+.delay-100 { animation-delay: 0.1s;  }
+.delay-150 { animation-delay: 0.15s; }
+.delay-200 { animation-delay: 0.2s;  }
+.delay-300 { animation-delay: 0.3s;  }
+.delay-400 { animation-delay: 0.4s;  }
+.delay-500 { animation-delay: 0.5s;  }
+.delay-600 { animation-delay: 0.6s;  }
+.delay-700 { animation-delay: 0.7s;  }
+
 /* Marquee for credits */
 @keyframes marquee {
   0% { transform: translateX(0); }

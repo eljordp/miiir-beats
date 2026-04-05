@@ -7,14 +7,16 @@ interface BeatCardProps {
   isPlaying: boolean;
   onPlay: () => void;
   onLicense: (beat: Beat) => void;
+  index: number;
 }
 
-export default function BeatCard({ beat, isPlaying, onPlay, onLicense }: BeatCardProps) {
+export default function BeatCard({ beat, isPlaying, onPlay, onLicense, index }: BeatCardProps) {
   return (
     <div
-      className={`flex items-center gap-3 sm:gap-5 px-3 sm:px-5 py-3 sm:py-4 border-b border-border transition-colors ${
+      className={`flex items-center gap-3 sm:gap-5 px-3 sm:px-5 py-3 sm:py-4 border-b border-border transition-colors animate-fade-up ${
         isPlaying ? "bg-surface-light" : "hover:bg-surface"
       }`}
+      style={{ animationDelay: `${index * 0.045}s` }}
     >
       {/* Play button */}
       <button
@@ -47,7 +49,6 @@ export default function BeatCard({ beat, isPlaying, onPlay, onLicense }: BeatCar
         <p className={`text-xs sm:text-sm font-semibold truncate ${isPlaying ? "text-accent" : "text-foreground"}`}>
           {beat.title}
         </p>
-        {/* Tags — hidden on smallest screens */}
         <div className="hidden xs:flex gap-2 mt-0.5">
           {beat.tags.slice(0, 2).map((tag) => (
             <span key={tag} className="text-[9px] text-muted uppercase tracking-wider">

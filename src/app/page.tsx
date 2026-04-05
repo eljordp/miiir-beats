@@ -81,12 +81,13 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Beat list */}
-            <div className="border-t border-border">
-              {filteredBeats.map((beat) => (
+            {/* Beat list — key on filter so stagger animation reruns on category change */}
+            <div key={filter} className="border-t border-border">
+              {filteredBeats.map((beat, i) => (
                 <BeatCard
                   key={beat.id}
                   beat={beat}
+                  index={i}
                   isPlaying={isPlaying && currentBeat?.id === beat.id}
                   onPlay={() => handlePlay(beat)}
                   onLicense={handleLicense}

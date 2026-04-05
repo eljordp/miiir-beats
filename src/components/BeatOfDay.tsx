@@ -1,6 +1,7 @@
 "use client";
 
 import { Beat, BOTD_DISCOUNT } from "@/lib/beats";
+import { useInView } from "@/hooks/useInView";
 
 interface BeatOfDayProps {
   beat: Beat;
@@ -11,12 +12,16 @@ interface BeatOfDayProps {
 
 export default function BeatOfDay({ beat, isPlaying, onPlay, onLicense }: BeatOfDayProps) {
   const discountedPrice = (beat.pricing.basic - BOTD_DISCOUNT).toFixed(2);
+  const { ref, inView } = useInView();
 
   return (
-    <section className="px-4 sm:px-6 pt-10 sm:pt-16 pb-0">
+    <section
+      ref={ref as React.RefObject<HTMLElement>}
+      className="px-4 sm:px-6 pt-10 sm:pt-16 pb-0"
+    >
       <div className="max-w-7xl mx-auto">
         {/* Section header */}
-        <div className="flex items-center gap-3 mb-5 sm:mb-6">
+        <div className={`flex items-center gap-3 mb-5 sm:mb-6 ${inView ? "animate-fade-in delay-0" : "opacity-0"}`}>
           <div className="w-2 h-2 rounded-full bg-accent animate-pulse" />
           <span className="text-[10px] sm:text-xs text-muted uppercase tracking-[0.2em]">Beat of the Day</span>
           <div className="flex-1 h-px bg-border" />
@@ -26,7 +31,7 @@ export default function BeatOfDay({ beat, isPlaying, onPlay, onLicense }: BeatOf
         </div>
 
         {/* Featured beat row */}
-        <div className="flex items-center gap-3 sm:gap-5 px-3 sm:px-5 py-3 sm:py-4 border border-accent/30 bg-accent/[0.03] relative overflow-hidden">
+        <div className={`flex items-center gap-3 sm:gap-5 px-3 sm:px-5 py-3 sm:py-4 border border-accent/30 bg-accent/[0.03] relative overflow-hidden ${inView ? "animate-fade-up delay-100" : "opacity-0"}`}>
           {/* Subtle glow */}
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_left,_rgba(255,45,45,0.06)_0%,_transparent_70%)] pointer-events-none" />
 
