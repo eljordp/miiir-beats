@@ -64,10 +64,13 @@ export default function Hero() {
 
         <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-6 sm:gap-12 mb-10 sm:mb-14">
           <div className="max-w-md animate-fade-up delay-300">
-            <p className="text-sm sm:text-base text-foreground/50 leading-relaxed mb-6">
+            <p className="text-sm sm:text-base text-foreground/50 leading-relaxed mb-2">
               Producer. Songwriter. Artist.<br />
-              107M+ streams. 200+ placements. 46M+ views.<br />
+              107M+ streams. 200+ placements. 46M+ views — in 2025 alone.<br />
               Get the sound you need.
+            </p>
+            <p className="text-[10px] text-muted/40 leading-relaxed mb-6 italic">
+              *Doesn&rsquo;t count the ones ripping YouTube beats because they can&rsquo;t afford them.
             </p>
             <div className="flex flex-col sm:flex-row gap-3">
               <a
