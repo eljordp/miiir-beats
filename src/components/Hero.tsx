@@ -1,3 +1,32 @@
+"use client";
+
+import { useState, useEffect, useRef } from "react";
+
+function useCounter(target: number, duration: number = 1800) {
+  const [count, setCount] = useState(0);
+  const startTime = useRef<number | null>(null);
+  const frameRef = useRef<number>(0);
+
+  useEffect(() => {
+    const animate = (timestamp: number) => {
+      if (!startTime.current) startTime.current = timestamp;
+      const elapsed = timestamp - startTime.current;
+      const progress = Math.min(elapsed / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      setCount(Math.floor(eased * target));
+      if (progress < 1) {
+        frameRef.current = requestAnimationFrame(animate);
+      } else {
+        setCount(target);
+      }
+    };
+    frameRef.current = requestAnimationFrame(animate);
+    return () => cancelAnimationFrame(frameRef.current);
+  }, [target, duration]);
+
+  return count;
+}
+
 export default function Hero() {
   const artists = [
     "EBK Jaaybo", "Mike Sherm", "Babytron", "Jaymoney30", "Daboii",
@@ -5,9 +34,13 @@ export default function Hero() {
   ];
   const credits = [...artists, ...artists];
 
+  const streams = useCounter(107);
+  const placements = useCounter(200);
+  const views = useCounter(46);
+
   return (
     <section className="relative min-h-[90vh] sm:min-h-[85vh] flex flex-col justify-center overflow-hidden pt-14 sm:pt-16">
-      {/* Background — subtle radial, not generic gradient */}
+      {/* Background — subtle radial */}
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_rgba(255,45,45,0.04)_0%,_transparent_60%)]" />
 
       {/* Grid lines for texture */}
@@ -24,7 +57,7 @@ export default function Hero() {
           <div className="flex-1 h-px bg-border" />
         </div>
 
-        {/* Main title — big, raw */}
+        {/* Main title */}
         <h1 className="text-[4rem] sm:text-[8rem] lg:text-[10rem] font-bold tracking-[-0.05em] leading-[0.85] mb-4 sm:mb-6">
           <span className="text-accent">415miiir</span>
         </h1>
@@ -33,7 +66,7 @@ export default function Hero() {
           <div className="max-w-md">
             <p className="text-sm sm:text-base text-foreground/50 leading-relaxed mb-6">
               Producer. Songwriter. Artist.<br />
-              107M+ streams. 205 credits. 46M+ views.<br />
+              107M+ streams. 200+ placements. 46M+ views.<br />
               Get the sound you need.
             </p>
             <div className="flex flex-col sm:flex-row gap-3">
@@ -52,18 +85,24 @@ export default function Hero() {
             </div>
           </div>
 
-          {/* Stats — vertical stack, right aligned */}
+          {/* Stats — animated counters */}
           <div className="flex sm:flex-col gap-6 sm:gap-4 sm:text-right">
             <div>
-              <p className="text-2xl sm:text-3xl font-bold text-accent tabular-nums">107M+</p>
+              <p className="text-2xl sm:text-3xl font-bold text-accent tabular-nums">
+                {streams}M+
+              </p>
               <p className="text-[10px] text-muted uppercase tracking-wider">Streams</p>
             </div>
             <div>
-              <p className="text-2xl sm:text-3xl font-bold tabular-nums">205</p>
-              <p className="text-[10px] text-muted uppercase tracking-wider">Credits</p>
+              <p className="text-2xl sm:text-3xl font-bold tabular-nums">
+                {placements}+
+              </p>
+              <p className="text-[10px] text-muted uppercase tracking-wider">Placements</p>
             </div>
             <div>
-              <p className="text-2xl sm:text-3xl font-bold tabular-nums">46M+</p>
+              <p className="text-2xl sm:text-3xl font-bold tabular-nums">
+                {views}M+
+              </p>
               <p className="text-[10px] text-muted uppercase tracking-wider">Views</p>
             </div>
           </div>

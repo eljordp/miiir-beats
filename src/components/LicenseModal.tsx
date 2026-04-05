@@ -6,6 +6,8 @@ import { useState } from "react";
 interface LicenseModalProps {
   beat: Beat;
   onClose: () => void;
+  isBeatOfDay?: boolean;
+  discount?: number;
 }
 
 type LicenseType = "basic" | "ultimate" | "exclusive";
@@ -16,9 +18,17 @@ const paymentLinks: Record<PaymentMethod, string> = {
   paypal: "https://www.paypal.biz/415miiir",
 };
 
-export default function LicenseModal({ beat, onClose }: LicenseModalProps) {
+export default function LicenseModal({ beat, onClose, isBeatOfDay, discount = 0 }: LicenseModalProps) {
   const [selected, setSelected] = useState<LicenseType>("basic");
   const [payment, setPayment] = useState<PaymentMethod>("cashapp");
+
+  const getPrice = (tier: LicenseType) => {
+    const base = beat.pricing[tier];
+    if (isBeatOfDay && tier === "basic" && discount > 0) {
+      return (base - discount).toFixed(2);
+    }
+    return base.toFixed(2);
+  };
 
   const tiers: LicenseType[] = ["basic", "ultimate", "exclusive"];
 
@@ -60,7 +70,9 @@ export default function LicenseModal({ beat, onClose }: LicenseModalProps) {
           <div className="flex sm:grid sm:grid-cols-3 gap-3 sm:gap-4 overflow-x-auto pb-2 sm:pb-0 -mx-5 px-5 sm:mx-0 sm:px-0 snap-x snap-mandatory sm:snap-none no-scrollbar">
             {tiers.map((tier) => {
               const details = licenseDetails[tier];
-              const price = beat.pricing[tier];
+              const price = getPrice(tier);
+              const originalPrice = beat.pricing[tier].toFixed(2);
+              const isDiscounted = isBeatOfDay && tier === "basic" && discount > 0;
               const isSelected = selected === tier;
               const isExclusive = tier === "exclusive";
 
@@ -82,9 +94,17 @@ export default function LicenseModal({ beat, onClose }: LicenseModalProps) {
                   <p className="text-[9px] sm:text-[10px] text-muted uppercase tracking-wider mb-1 sm:mb-2">
                     {details.name}
                   </p>
-                  <p className="text-xl sm:text-2xl font-bold text-foreground mb-3 sm:mb-4">
-                    ${price}
-                  </p>
+                  <div className="mb-3 sm:mb-4">
+                    {isDiscounted && (
+                      <p className="text-xs text-muted line-through tabular-nums">${originalPrice}</p>
+                    )}
+                    <p className="text-xl sm:text-2xl font-bold text-foreground">
+                      ${price}
+                      {isDiscounted && (
+                        <span className="ml-2 text-[10px] font-bold text-accent uppercase tracking-wider align-middle">Today only</span>
+                      )}
+                    </p>
+                  </div>
                   <ul className="space-y-1.5 sm:space-y-2">
                     {details.features.map((feature) => (
                       <li key={feature} className="flex items-start gap-2 text-[10px] sm:text-xs text-foreground/60">
@@ -138,7 +158,7 @@ export default function LicenseModal({ beat, onClose }: LicenseModalProps) {
               rel="noopener noreferrer"
               className="w-full sm:w-auto px-8 py-3.5 sm:py-3 bg-accent text-background font-bold hover:bg-accent-dim active:scale-[0.98] transition-all text-sm sm:text-base text-center uppercase tracking-wider"
             >
-              Pay ${beat.pricing[selected]} via {payment === "cashapp" ? "Cash App" : "PayPal"}
+              Pay ${getPrice(selected)} via {payment === "cashapp" ? "Cash App" : "PayPal"}
             </a>
             <p className="text-[10px] sm:text-xs text-muted text-center">
               After payment, DM <span className="text-foreground/60">@415miiir</span> on Instagram with your receipt.

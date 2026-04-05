@@ -1,9 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import { Beat, beats } from "@/lib/beats";
+import { Beat, beats, getBeatOfDay, BOTD_DISCOUNT } from "@/lib/beats";
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
+import BeatOfDay from "@/components/BeatOfDay";
 import BeatCard from "@/components/BeatCard";
 import AudioPlayer from "@/components/AudioPlayer";
 import LicenseModal from "@/components/LicenseModal";
@@ -16,6 +17,7 @@ export default function Home() {
   const [licenseBeat, setLicenseBeat] = useState<Beat | null>(null);
   const [filter, setFilter] = useState<string>("All");
 
+  const beatOfDay = getBeatOfDay();
   const allTags = ["All", ...Array.from(new Set(beats.flatMap((b) => b.tags)))];
 
   const filteredBeats =
@@ -30,12 +32,24 @@ export default function Home() {
     }
   };
 
+  const handleLicense = (beat: Beat) => {
+    setLicenseBeat(beat);
+  };
+
   return (
     <>
       <Navbar />
 
       <main className={`min-h-screen ${currentBeat ? "pb-16 sm:pb-20" : ""}`}>
         <Hero />
+
+        {/* Beat of the Day */}
+        <BeatOfDay
+          beat={beatOfDay}
+          isPlaying={isPlaying && currentBeat?.id === beatOfDay.id}
+          onPlay={() => handlePlay(beatOfDay)}
+          onLicense={handleLicense}
+        />
 
         {/* Beat Catalog */}
         <section id="beats" className="py-16 sm:py-24 px-4 sm:px-6">
@@ -49,7 +63,7 @@ export default function Home() {
             </div>
 
             <div className="flex flex-col gap-4 mb-8 sm:mb-10">
-              {/* Tag filters — horizontal scroll on mobile */}
+              {/* Tag filters */}
               <div className="flex gap-2 overflow-x-auto pb-2 -mx-4 px-4 sm:mx-0 sm:px-0 sm:flex-wrap no-scrollbar">
                 {allTags.map((tag) => (
                   <button
@@ -75,7 +89,7 @@ export default function Home() {
                   beat={beat}
                   isPlaying={isPlaying && currentBeat?.id === beat.id}
                   onPlay={() => handlePlay(beat)}
-                  onLicense={setLicenseBeat}
+                  onLicense={handleLicense}
                 />
               ))}
             </div>
@@ -95,7 +109,12 @@ export default function Home() {
 
       {/* License Modal */}
       {licenseBeat && (
-        <LicenseModal beat={licenseBeat} onClose={() => setLicenseBeat(null)} />
+        <LicenseModal
+          beat={licenseBeat}
+          isBeatOfDay={licenseBeat.id === beatOfDay.id}
+          discount={BOTD_DISCOUNT}
+          onClose={() => setLicenseBeat(null)}
+        />
       )}
     </>
   );
