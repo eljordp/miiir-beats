@@ -17,7 +17,7 @@ export default function LicensingInfo() {
     <section
       id="licensing"
       ref={ref as React.RefObject<HTMLElement>}
-      className="py-16 sm:py-24 px-5 sm:px-6 border-t border-border"
+      className="py-12 sm:py-24 px-5 sm:px-6 border-t border-border"
     >
       <div className="max-w-5xl mx-auto">
         <div className={`flex items-center gap-3 mb-10 sm:mb-16 ${inView ? "animate-fade-in delay-0" : "opacity-0"}`}>

@@ -13,7 +13,7 @@ export default function PopularBeats() {
   return (
     <section
       ref={ref as React.RefObject<HTMLElement>}
-      className="px-4 sm:px-6 py-16 sm:py-24 border-t border-border"
+      className="px-4 sm:px-6 py-10 sm:py-24 border-t border-border"
     >
       <div className="max-w-7xl mx-auto">
         {/* Section header */}

@@ -49,7 +49,7 @@ export default function BeatCard({ beat, isPlaying, onPlay, onLicense, index }: 
         <p className={`text-xs sm:text-sm font-semibold truncate ${isPlaying ? "text-accent" : "text-foreground"}`}>
           {beat.title}
         </p>
-        <div className="hidden xs:flex gap-2 mt-0.5">
+        <div className="flex gap-2 mt-0.5">
           {beat.tags.slice(0, 2).map((tag) => (
             <span key={tag} className="text-[9px] text-muted uppercase tracking-wider">
               {tag}

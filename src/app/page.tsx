@@ -56,7 +56,7 @@ export default function Home() {
         />
 
         {/* Beat Catalog */}
-        <section id="beats" className="py-16 sm:py-24 px-4 sm:px-6">
+        <section id="beats" className="py-10 sm:py-24 px-4 sm:px-6">
           <div className="max-w-7xl mx-auto">
             {/* Section header */}
             <div className="flex items-center gap-3 mb-6 sm:mb-8">

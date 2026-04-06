@@ -1,5 +1,7 @@
 @import "tailwindcss";
 
+@custom-variant xs (@media (min-width: 400px));
+
 @theme inline {
   --color-background: #050505;
   --color-foreground: #e8e8e8;
