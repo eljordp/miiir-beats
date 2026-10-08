@@ -96,6 +96,7 @@ export default function SoundSession({ children }: { children: React.ReactNode }
   }
 
   function playTrack(id: string) {
+    try { sessionStorage.setItem(entryKey, "1"); } catch { /* Storage is optional. */ }
     if (activeId === id) toggle();
     else startTrack(id);
   }
@@ -110,7 +111,7 @@ export default function SoundSession({ children }: { children: React.ReactNode }
   }
 
   function enterSilent() {
-    if (introPlaying.current) audioRef.current?.pause();
+    audioRef.current?.pause();
     finishIntro();
   }
 
