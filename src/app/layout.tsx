@@ -1,6 +1,8 @@
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -19,7 +21,8 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  title: "Miiir Beats | Producer, Songwriter, Artist",
+  metadataBase: new URL("https://miiir-beats.vercel.app"),
+  title: { default: "Miiir | Bay Area Producer", template: "%s | Miiir" },
   description:
     "Browse and license beats from Miiir — Bay Area producer with 107M+ streams. Monthly deals: $70 leases, $60 each for two or more, and $400 custom exclusives.",
   openGraph: {
@@ -39,7 +42,10 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background text-foreground`}
       >
-        {children}
+        <a href="#main-content" className="skip-link">Skip to content</a>
+        <Navbar />
+        <main id="main-content">{children}</main>
+        <Footer />
       </body>
     </html>
   );

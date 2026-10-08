@@ -1,77 +1,30 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { usePathname } from "next/navigation";
+import { useEffect, useRef, useState } from "react";
+
+const pages = [{ href: "/", label: "Home" }, { href: "/beats", label: "Beats" }, { href: "/work", label: "Work" }, { href: "/deals", label: "Deals" }, { href: "/contact", label: "Contact" }];
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
-
+  const path = usePathname();
+  const toggleRef = useRef<HTMLButtonElement>(null);
+  useEffect(() => {
+    if (!open) return;
+    const handleKey = (event: KeyboardEvent) => { if (event.key === "Escape") { setOpen(false); toggleRef.current?.focus(); } };
+    document.addEventListener("keydown", handleKey);
+    return () => document.removeEventListener("keydown", handleKey);
+  }, [open]);
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-background/90 backdrop-blur-md border-b border-border safe-top">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 h-14 sm:h-16 flex items-center justify-between">
-        <Link href="/" className="flex items-center gap-2">
-          <span className="text-xl sm:text-2xl font-bold tracking-[-0.03em] text-accent">Miiir</span>
-          <span className="text-[10px] text-muted uppercase tracking-[0.15em] mt-1">Beats</span>
-        </Link>
-
-        {/* Desktop nav */}
-        <div className="hidden sm:flex items-center gap-8">
-          <a href="#beats" className="text-xs uppercase tracking-wider text-muted hover:text-foreground transition-colors">
-            Beats
-          </a>
-          <a href="#licensing" className="text-xs uppercase tracking-wider text-muted hover:text-foreground transition-colors">
-            Deals
-          </a>
-          <a href="#contact" className="text-xs uppercase tracking-wider text-muted hover:text-foreground transition-colors">
-            Contact
-          </a>
-        </div>
-
-        {/* Mobile hamburger */}
-        <button
-          onClick={() => setOpen(!open)}
-          className="sm:hidden w-10 h-10 flex items-center justify-center text-muted"
-          aria-label="Menu"
-          aria-expanded={open}
-        >
-          {open ? (
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M6 18L18 6M6 6l12 12" />
-            </svg>
-          ) : (
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 6h16M4 12h16M4 18h16" />
-            </svg>
-          )}
-        </button>
-      </div>
-
-      {/* Mobile menu */}
-      {open && (
-        <div className="sm:hidden bg-background border-b border-border px-4 pb-4">
-          <a
-            href="#beats"
-            onClick={() => setOpen(false)}
-            className="block py-3 text-xs uppercase tracking-wider text-muted hover:text-foreground transition-colors border-b border-border/50"
-          >
-            Beats
-          </a>
-          <a
-            href="#licensing"
-            onClick={() => setOpen(false)}
-            className="block py-3 text-xs uppercase tracking-wider text-muted hover:text-foreground transition-colors border-b border-border/50"
-          >
-            Deals
-          </a>
-          <a
-            href="#contact"
-            onClick={() => setOpen(false)}
-            className="block py-3 text-xs uppercase tracking-wider text-muted hover:text-foreground transition-colors"
-          >
-            Contact
-          </a>
-        </div>
-      )}
-    </nav>
+    <header className="site-header">
+      <nav className="shell nav-inner" aria-label="Main navigation">
+        <Link href="/" className="brand" onClick={() => setOpen(false)}>MIIIR<span className="brand-dot">.</span><span className="brand-sub">415 / SOUND</span></Link>
+        <div className="desktop-nav">{pages.map((page) => <Link key={page.href} href={page.href} aria-current={path === page.href ? "page" : undefined} className={path === page.href ? "active" : ""}>{page.label}</Link>)}</div>
+        <Link href="/contact" className="nav-contact">LET’S WORK ↗</Link>
+        <button ref={toggleRef} onClick={() => setOpen((value) => !value)} className="menu-toggle" aria-label={open ? "Close menu" : "Open menu"} aria-expanded={open} aria-controls="mobile-menu"><span aria-hidden="true">{open ? "×" : "☰"}</span></button>
+      </nav>
+      {open ? <nav id="mobile-menu" className="mobile-nav shell" aria-label="Mobile navigation">{pages.map((page, i) => <Link key={page.href} href={page.href} onClick={() => setOpen(false)} aria-current={path === page.href ? "page" : undefined}><span>0{i + 1}</span>{page.label}<span aria-hidden="true">↗</span></Link>)}</nav> : null}
+    </header>
   );
 }

@@ -1,103 +1,22 @@
-"use client";
-
-import { useState } from "react";
-import { Beat, beats, getBeatOfDay } from "@/lib/beats";
-import Navbar from "@/components/Navbar";
+import Image from "next/image";
+import Link from "next/link";
 import Hero from "@/components/Hero";
-import BeatOfDay from "@/components/BeatOfDay";
-import BeatCard from "@/components/BeatCard";
-import LicenseModal from "@/components/LicenseModal";
-import LicensingInfo from "@/components/LicensingInfo";
-import PopularBeats from "@/components/PopularBeats";
-import Footer from "@/components/Footer";
+import VideoBanner from "@/components/VideoBanner";
+import Reveal from "@/components/Reveal";
+import WorkGrid from "@/components/WorkGrid";
+import { instagramUrl } from "@/lib/beats";
+
+const artists = ["EBK Jaaybo", "Mike Sherm", "Babytron", "Jaymoney30", "Daboii", "SlimmyB", "Yhung To", "Fredo Bagz", "Zaybang", "Lil Bean", "Lil Yee"];
 
 export default function Home() {
-  const [licenseBeat, setLicenseBeat] = useState<Beat | null>(null);
-  const [filter, setFilter] = useState<string>("All");
-
-  const beatOfDay = getBeatOfDay();
-  const allTags = ["All", ...Array.from(new Set(beats.flatMap((b) => b.tags)))];
-
-  const filteredBeats =
-    filter === "All" ? beats : beats.filter((b) => b.tags.includes(filter));
-
-  const handleLicense = (beat: Beat) => {
-    setLicenseBeat(beat);
-  };
-
-  return (
-    <>
-      <Navbar />
-
-      <main className="min-h-screen">
-        <Hero />
-        <LicensingInfo />
-
-        {/* Most Popular */}
-        <PopularBeats />
-
-        {/* Beat of the Day */}
-        <BeatOfDay
-          beat={beatOfDay}
-          onLicense={handleLicense}
-        />
-
-        {/* Beat Catalog */}
-        <section id="beats" className="py-10 sm:py-24 px-4 sm:px-6">
-          <div className="max-w-7xl mx-auto">
-            {/* Section header */}
-            <div className="flex items-center gap-3 mb-6 sm:mb-8">
-              <div className="w-2 h-2 rounded-full bg-accent" />
-              <span className="text-[10px] sm:text-xs text-muted uppercase tracking-[0.2em]">Catalog</span>
-              <div className="flex-1 h-px bg-border" />
-              <span className="text-[10px] sm:text-xs text-muted">{filteredBeats.length} beats</span>
-            </div>
-
-            <div className="flex flex-col gap-4 mb-8 sm:mb-10">
-              {/* Tag filters */}
-              <div className="flex gap-2 overflow-x-auto pb-2 -mx-4 px-4 sm:mx-0 sm:px-0 sm:flex-wrap no-scrollbar">
-                {allTags.map((tag) => (
-                  <button
-                    key={tag}
-                    onClick={() => setFilter(tag)}
-                    className={`px-3 py-1.5 sm:py-1 text-[10px] sm:text-xs uppercase tracking-wider transition-colors flex-shrink-0 ${
-                      filter === tag
-                        ? "bg-accent text-background font-bold"
-                        : "bg-surface border border-border text-muted hover:text-foreground"
-                    }`}
-                  >
-                    {tag}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            <p className="text-xs text-muted mb-5">Catalog audio previews are not available yet. Listen on <a href="https://www.youtube.com/@415miiir" target="_blank" rel="noopener noreferrer" className="underline text-foreground">YouTube</a> and DM Miiir to confirm beat availability.</p>
-
-            {/* Beat list — key on filter so stagger animation reruns on category change */}
-            <div key={filter} className="border-t border-border">
-              {filteredBeats.map((beat, i) => (
-                <BeatCard
-                  key={beat.id}
-                  beat={beat}
-                  index={i}
-                  onLicense={handleLicense}
-                />
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <Footer />
-      </main>
-
-      {/* License Modal */}
-      {licenseBeat && (
-        <LicenseModal
-          beat={licenseBeat}
-          onClose={() => setLicenseBeat(null)}
-        />
-      )}
-    </>
-  );
+  return <>
+    <Hero />
+    <div className="credits-marquee" aria-label={`Artist credits: ${artists.join(", ")}`}><div aria-hidden="true">{[...artists, ...artists].map((artist, i) => <span key={i}>{artist}<b>✳</b></span>)}</div></div>
+    <VideoBanner />
+    <section className="section shell"><Reveal><div className="section-heading"><p className="eyebrow">01 / THE NUMBERS</p><span className="section-aside">2025 / A YEAR IN SOUND</span></div><div className="stats-grid"><div><p>107M<span>+</span></p><span>STREAMS</span></div><div><p>200<span>+</span></p><span>PLACEMENTS</span></div><div><p>46M<span>+</span></p><span>VIEWS</span></div></div></Reveal></section>
+    <section className="section shell"><Reveal><div className="section-heading"><div><p className="eyebrow">02 / SELECTED WORK</p><h2 className="section-title">Let the records talk<span>.</span></h2></div><Link href="/work" className="text-link">Explore the work ↗</Link></div></Reveal><WorkGrid /></section>
+    <section className="studio-section"><div className="shell studio-grid"><Reveal className="studio-visual"><Image src="/media/session-03.webp" alt="A group of artists around the desk during a studio session shared by Miiir" fill sizes="(max-width: 700px) 100vw, 50vw" className="object-cover" /><span className="image-label">IN THE ROOM. MAKING RECORDS.</span></Reveal><Reveal delay={100} className="studio-copy"><p className="eyebrow">03 / MADE FOR YOUR SOUND</p><h2 className="section-title">Make it<br />your own<span>.</span></h2><p>Find a beat that fits. Or start from scratch with custom, exclusive production.</p><div className="custom-price"><span>$400</span> / custom exclusive<br /><small>Or three for $1,000.</small></div><Link href="/contact" className="button button-primary">Talk custom production ↗</Link></Reveal></div></section>
+    <section className="section shell"><Reveal className="deal-banner"><div><p className="eyebrow">DEALS ALL MONTH</p><h2>More beats.<br /><span>More possibilities.</span></h2></div><div><p className="deal-banner-price">$60<span> / beat</span></p><p>When you grab two or more. Single leases $70.</p><Link href="/deals" className="button button-lime">See the deals ↗</Link></div></Reveal></section>
+    <section className="contact-strip shell"><Reveal><p className="eyebrow">04 / LET’S MAKE SOMETHING</p><a href={instagramUrl} target="_blank" rel="noopener noreferrer" className="big-contact">YOUR NEXT<br />RECORD <span>↗</span></a><p>Leases, custom beats, and collaborations. <Link href="/contact">Start the conversation.</Link></p></Reveal></section>
+  </>;
 }

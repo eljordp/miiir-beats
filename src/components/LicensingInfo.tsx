@@ -2,8 +2,8 @@ import { instagramUrl, monthlyDeals } from "@/lib/beats";
 
 export default function LicensingInfo() {
   const offers = [
-    { title: "Single lease", price: monthlyDeals.lease, unit: "/ beat", detail: "One beat. Your next record.", note: "Browse the catalog and request your lease.", href: "#beats", cta: "Find your beat" },
-    { title: "Multiple leases", price: monthlyDeals.bundleLease, unit: "/ beat", detail: "Grab two or more.", note: "Two for $120. Three for $180. $60 each when you grab more than one.", href: "#beats", cta: "Build your bundle" },
+    { title: "Single lease", price: monthlyDeals.lease, unit: "/ beat", detail: "One beat. Your next record.", note: "Browse the catalog and request your lease.", href: "/beats", cta: "Find your beat" },
+    { title: "Multiple leases", price: monthlyDeals.bundleLease, unit: "/ beat", detail: "Grab two or more.", note: "Two for $120. Three for $180. $60 each when you grab more than one.", href: "/beats", cta: "Build your bundle" },
     { title: "Custom exclusives", price: monthlyDeals.customExclusive, unit: "/ custom", detail: `Or ${monthlyDeals.customBundleCount} for $${monthlyDeals.customBundle.toLocaleString()}.`, note: "Made for your sound. DM Miiir to discuss your project and confirm the terms.", href: instagramUrl, cta: "Talk custom production" },
   ];
 

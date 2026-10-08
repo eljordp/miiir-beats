@@ -19,11 +19,13 @@ export default function LicenseModal({ beat, onClose }: LicenseModalProps) {
   useEffect(() => {
     const dialog = dialogRef.current;
     const previousOverflow = document.body.style.overflow;
+    const previousFocus = document.activeElement instanceof HTMLElement ? document.activeElement : null;
     dialog?.showModal();
     document.body.style.overflow = "hidden";
     return () => {
       dialog?.close();
       document.body.style.overflow = previousOverflow;
+      if (previousFocus?.isConnected) previousFocus.focus();
     };
   }, []);
 
