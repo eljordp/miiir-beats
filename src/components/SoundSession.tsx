@@ -7,6 +7,7 @@ import { instrumentals } from "@/lib/instrumentals";
 type SoundState = {
   activeId: string | null;
   playing: boolean;
+  mediaMode: "music" | "video";
   playTrack: (id: string) => void;
   pauseMusic: () => void;
 };
@@ -36,6 +37,7 @@ export default function SoundSession({ children }: { children: React.ReactNode }
   const exitTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [activeId, setActiveId] = useState<string | null>(null);
   const [playing, setPlaying] = useState(false);
+  const [mediaMode, setMediaMode] = useState<"music" | "video">("music");
   const [position, setPosition] = useState(0);
   const [duration, setDuration] = useState(0);
   const [muted, setMuted] = useState(false);
@@ -72,6 +74,7 @@ export default function SoundSession({ children }: { children: React.ReactNode }
     const track = instrumentals.find(item => item.id === id);
     if (!audio || !track) return;
     setError("");
+    setMediaMode("music");
     audio.pause();
     setActiveId(id);
     setPosition(from);
@@ -90,6 +93,7 @@ export default function SoundSession({ children }: { children: React.ReactNode }
     const audio = audioRef.current;
     if (!audio) return;
     if (audio.paused) {
+      setMediaMode("music");
       setError("");
       void audio.play().catch(() => setError("Music couldn’t load. Try again or listen on YouTube."));
     } else audio.pause();
@@ -115,7 +119,7 @@ export default function SoundSession({ children }: { children: React.ReactNode }
     finishIntro();
   }
 
-  return <SoundContext value={{ activeId, playing, playTrack, pauseMusic: () => audioRef.current?.pause() }}>
+  return <SoundContext value={{ activeId, playing, mediaMode, playTrack, pauseMusic: () => { audioRef.current?.pause(); setMediaMode("video"); } }}>
     {children}
     <audio ref={audioRef} preload="none" onLoadedMetadata={event => {
       const audio = event.currentTarget;
