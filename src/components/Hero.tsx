@@ -4,7 +4,7 @@ import Image from "next/image";
 export default function Hero() {
   return (
     <section className="hero">
-      <div className="hero-media"><Image src="/media/session-03.webp" alt="Artists gathered around the desk during a real studio session shared by Miiir" fill priority sizes="100vw" className="hero-photo" /></div>
+      <div className="hero-media"><Image unoptimized src="/media/session-03-original.jpg" alt="Artists gathered around the desk during a real studio session shared by Miiir" fill priority sizes="100vw" className="hero-photo" /></div>
       <div className="hero-shade" aria-hidden="true" />
       <div className="hero-content shell">
         <div className="hero-eyebrow"><span className="live-dot" />415 / BAY AREA <span className="hero-role">PRODUCER · SONGWRITER · ARTIST</span></div>

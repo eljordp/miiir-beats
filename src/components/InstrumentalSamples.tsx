@@ -5,7 +5,7 @@ import { useSound } from "@/components/SoundSession";
 import { instrumentals } from "@/lib/instrumentals";
 
 export default function InstrumentalSamples() {
-  const { activeId, playing, playTrack } = useSound();
+  const { activeId, playing, autoMix, playTrack } = useSound();
 
   return <section className="shell instrumental-section" id="instrumentals" aria-labelledby="instrumental-heading">
     <div className="section-heading">
@@ -14,10 +14,10 @@ export default function InstrumentalSamples() {
     </div>
     <p className="instrumental-description">Official instrumental uploads. Pick a track and press play.</p>
     <div className="instrumental-tracks">
-      {instrumentals.map(sample => <button key={sample.id} onClick={() => playTrack(sample.id)} aria-label={`${activeId === sample.id && playing ? "Pause" : "Play"} ${sample.title} instrumental by ${sample.artist}`} aria-pressed={activeId === sample.id}  className="instrumental-track">
+      {instrumentals.map(sample => <button key={sample.id} onClick={() => playTrack(sample.id)} aria-label={`${activeId === sample.id && playing && !autoMix ? "Pause" : "Play"} ${sample.title} instrumental by ${sample.artist}`} aria-pressed={activeId === sample.id && !autoMix}  className="instrumental-track">
         <span className="instrumental-cover"><Image src={`https://i.ytimg.com/vi/${sample.id}/hqdefault.jpg`} alt="" fill sizes="64px" className="object-cover" /></span>
         <span className="instrumental-track-text"><span className="instrumental-title">{sample.title}</span><span className="instrumental-artist">{sample.artist}</span></span>
-        <span className="instrumental-duration">{sample.duration}</span><span aria-hidden="true" className="instrumental-play">{activeId === sample.id && playing ? "Ⅱ" : "▷"}</span>
+        <span className="instrumental-duration">{sample.duration}</span><span aria-hidden="true" className="instrumental-play">{activeId === sample.id && playing && !autoMix ? "Ⅱ" : "▷"}</span>
       </button>)}
     </div>
   </section>;
