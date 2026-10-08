@@ -1,20 +1,17 @@
 "use client";
 
 import { useState } from "react";
-import { Beat, beats, getBeatOfDay, BOTD_DISCOUNT } from "@/lib/beats";
+import { Beat, beats, getBeatOfDay } from "@/lib/beats";
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import BeatOfDay from "@/components/BeatOfDay";
 import BeatCard from "@/components/BeatCard";
-import AudioPlayer from "@/components/AudioPlayer";
 import LicenseModal from "@/components/LicenseModal";
 import LicensingInfo from "@/components/LicensingInfo";
 import PopularBeats from "@/components/PopularBeats";
 import Footer from "@/components/Footer";
 
 export default function Home() {
-  const [currentBeat, setCurrentBeat] = useState<Beat | null>(null);
-  const [isPlaying, setIsPlaying] = useState(false);
   const [licenseBeat, setLicenseBeat] = useState<Beat | null>(null);
   const [filter, setFilter] = useState<string>("All");
 
@@ -24,15 +21,6 @@ export default function Home() {
   const filteredBeats =
     filter === "All" ? beats : beats.filter((b) => b.tags.includes(filter));
 
-  const handlePlay = (beat: Beat) => {
-    if (currentBeat?.id === beat.id) {
-      setIsPlaying(!isPlaying);
-    } else {
-      setCurrentBeat(beat);
-      setIsPlaying(true);
-    }
-  };
-
   const handleLicense = (beat: Beat) => {
     setLicenseBeat(beat);
   };
@@ -41,8 +29,9 @@ export default function Home() {
     <>
       <Navbar />
 
-      <main className={`min-h-screen ${currentBeat ? "pb-16 sm:pb-20" : ""}`}>
+      <main className="min-h-screen">
         <Hero />
+        <LicensingInfo />
 
         {/* Most Popular */}
         <PopularBeats />
@@ -50,8 +39,6 @@ export default function Home() {
         {/* Beat of the Day */}
         <BeatOfDay
           beat={beatOfDay}
-          isPlaying={isPlaying && currentBeat?.id === beatOfDay.id}
-          onPlay={() => handlePlay(beatOfDay)}
           onLicense={handleLicense}
         />
 
@@ -85,6 +72,8 @@ export default function Home() {
               </div>
             </div>
 
+            <p className="text-xs text-muted mb-5">Catalog audio previews are not available yet. Listen on <a href="https://www.youtube.com/@415miiir" target="_blank" rel="noopener noreferrer" className="underline text-foreground">YouTube</a> and DM Miiir to confirm beat availability.</p>
+
             {/* Beat list — key on filter so stagger animation reruns on category change */}
             <div key={filter} className="border-t border-border">
               {filteredBeats.map((beat, i) => (
@@ -92,8 +81,6 @@ export default function Home() {
                   key={beat.id}
                   beat={beat}
                   index={i}
-                  isPlaying={isPlaying && currentBeat?.id === beat.id}
-                  onPlay={() => handlePlay(beat)}
                   onLicense={handleLicense}
                 />
               ))}
@@ -101,23 +88,13 @@ export default function Home() {
           </div>
         </section>
 
-        <LicensingInfo />
         <Footer />
       </main>
-
-      {/* Audio Player */}
-      <AudioPlayer
-        beat={currentBeat}
-        isPlaying={isPlaying}
-        onPlayPause={() => setIsPlaying(!isPlaying)}
-      />
 
       {/* License Modal */}
       {licenseBeat && (
         <LicenseModal
           beat={licenseBeat}
-          isBeatOfDay={licenseBeat.id === beatOfDay.id}
-          discount={BOTD_DISCOUNT}
           onClose={() => setLicenseBeat(null)}
         />
       )}

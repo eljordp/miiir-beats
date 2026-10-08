@@ -1,75 +1,34 @@
-"use client";
-
-import { useRef } from "react";
-import { licenseDetails } from "@/lib/beats";
-import { useInView } from "@/hooks/useInView";
+import { instagramUrl, monthlyDeals } from "@/lib/beats";
 
 export default function LicensingInfo() {
-  const tiers = [
-    { key: "basic" as const, price: "$79.99", highlight: false },
-    { key: "ultimate" as const, price: "$99.99", highlight: false },
-    { key: "exclusive" as const, price: "$499.99+", highlight: true },
+  const offers = [
+    { title: "Single lease", price: monthlyDeals.lease, unit: "/ beat", detail: "One beat. Your next record.", note: "Browse the catalog and request your lease.", href: "#beats", cta: "Find your beat" },
+    { title: "Multiple leases", price: monthlyDeals.bundleLease, unit: "/ beat", detail: "Grab two or more.", note: "Two for $120. Three for $180. $60 each when you grab more than one.", href: "#beats", cta: "Build your bundle" },
+    { title: "Custom exclusives", price: monthlyDeals.customExclusive, unit: "/ custom", detail: `Or ${monthlyDeals.customBundleCount} for $${monthlyDeals.customBundle.toLocaleString()}.`, note: "Made for your sound. DM Miiir to discuss your project and confirm the terms.", href: instagramUrl, cta: "Talk custom production" },
   ];
 
-  const { ref, inView } = useInView();
-
   return (
-    <section
-      id="licensing"
-      ref={ref as React.RefObject<HTMLElement>}
-      className="py-12 sm:py-24 px-5 sm:px-6 border-t border-border"
-    >
+    <section id="licensing" className="px-5 sm:px-6 py-14 sm:py-24 border-t border-border">
       <div className="max-w-5xl mx-auto">
-        <div className={`flex items-center gap-3 mb-10 sm:mb-16 ${inView ? "animate-fade-in delay-0" : "opacity-0"}`}>
-          <div className="w-2 h-2 rounded-full bg-accent" />
-          <span className="text-[10px] sm:text-xs text-muted uppercase tracking-[0.2em]">Licensing</span>
-          <div className="flex-1 h-px bg-border" />
+        <div className="flex items-center gap-3 mb-8">
+          <span className="w-2 h-2 rounded-full bg-[#a2ef78]" />
+          <p className="text-xs uppercase tracking-[0.2em] text-[#a2ef78]">Monthly deals</p>
+          <div className="h-px flex-1 bg-border" />
         </div>
-
-        <div className={`sm:text-center mb-10 sm:mb-14 ${inView ? "animate-fade-up delay-100" : "opacity-0"}`}>
-          <h2 className="text-2xl sm:text-4xl font-bold tracking-[-0.03em] mb-3 sm:mb-4">
-            Three tiers. Your choice.
-          </h2>
-          <p className="text-sm text-muted max-w-md sm:mx-auto">
-            From demos to major releases. Pick the license that fits your project.
-          </p>
+        <h2 className="text-4xl sm:text-6xl font-bold tracking-tight uppercase italic">Deals all month.</h2>
+        <p className="mt-4 mb-10 text-sm text-muted">Pick your sound. Grab a bundle. Or build something from scratch.</p>
+        <div className="grid sm:grid-cols-3 gap-4">
+          {offers.map((offer, index) => (
+            <article key={offer.title} className={`flex flex-col p-6 sm:p-7 border rounded-lg ${index === 1 ? "border-[#a2ef78]/60 bg-[#a2ef78]/[0.06]" : "border-border bg-surface"}`}>
+              <p className="text-xs uppercase tracking-widest text-muted">{offer.title}</p>
+              <p className="mt-6 text-5xl font-bold tracking-tight text-[#a2ef78]">${offer.price}<span className="text-xs font-normal tracking-normal text-muted ml-2">{offer.unit}</span></p>
+              <h3 className="mt-5 text-lg font-semibold">{offer.detail}</h3>
+              <p className="mt-2 mb-8 text-sm leading-relaxed text-muted">{offer.note}</p>
+              <a href={offer.href} target={offer.href.startsWith("https") ? "_blank" : undefined} rel={offer.href.startsWith("https") ? "noopener noreferrer" : undefined} className="mt-auto py-3 px-4 border border-[#a2ef78]/30 rounded-sm text-center text-xs font-bold uppercase tracking-wide hover:bg-[#a2ef78] hover:text-background transition-colors">{offer.cta} ↗</a>
+            </article>
+          ))}
         </div>
-
-        {/* Horizontal scroll on mobile, grid on desktop */}
-        <div className="flex sm:grid sm:grid-cols-3 gap-4 sm:gap-6 overflow-x-auto pb-4 sm:pb-0 -mx-5 px-5 sm:mx-0 sm:px-0 snap-x snap-mandatory sm:snap-none no-scrollbar">
-          {tiers.map(({ key, price, highlight }, i) => {
-            const details = licenseDetails[key];
-            const delayClass = i === 0 ? "delay-200" : i === 1 ? "delay-300" : "delay-400";
-            return (
-              <div
-                key={key}
-                className={`relative p-6 sm:p-8 border transition-all flex-shrink-0 w-[75vw] sm:w-auto snap-center ${
-                  highlight
-                    ? "border-accent bg-accent/5"
-                    : "border-border bg-surface hover:border-foreground/20"
-                } ${inView ? `animate-fade-up ${delayClass}` : "opacity-0"}`}
-              >
-                {highlight && (
-                  <span className="absolute -top-2.5 left-6 px-2 py-0.5 bg-accent text-background text-[9px] font-bold uppercase tracking-wider">
-                    Most Popular
-                  </span>
-                )}
-                <p className="text-[10px] sm:text-xs text-muted uppercase tracking-wider mb-2 sm:mb-3">
-                  {details.name}
-                </p>
-                <p className="text-3xl sm:text-4xl font-bold mb-4 sm:mb-6 tracking-tight">{price}</p>
-                <ul className="space-y-2 sm:space-y-3">
-                  {details.features.map((feature) => (
-                    <li key={feature} className="flex items-start gap-2 sm:gap-3 text-xs sm:text-sm text-foreground/60">
-                      <span className={`w-1 h-1 rounded-full mt-1.5 flex-shrink-0 ${highlight ? "bg-accent" : "bg-accent/40"}`} />
-                      {feature}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            );
-          })}
-        </div>
+        <p className="text-xs text-muted mt-6">Confirm availability, delivery files, and license terms with <a href={instagramUrl} target="_blank" rel="noopener noreferrer" className="underline underline-offset-4 text-foreground">@stillmiiir</a> before payment.</p>
       </div>
     </section>
   );

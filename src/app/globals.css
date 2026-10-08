@@ -141,3 +141,12 @@ input[type="range"]::-webkit-slider-thumb {
 .animate-marquee {
   animation: marquee 50s linear infinite;
 }
+
+section[id], footer[id] { scroll-margin-top: 80px; }
+a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible {
+  outline: 2px solid #a2ef78;
+  outline-offset: 4px;
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}

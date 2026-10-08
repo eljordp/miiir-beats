@@ -19,12 +19,12 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  title: "415miiir Beats | Producer, Songwriter, Artist",
+  title: "Miiir Beats | Producer, Songwriter, Artist",
   description:
-    "Browse and license beats from 415miiir — Bay Area producer with 107M+ streams. Basic leases, ultimate leases, and exclusive buyouts.",
+    "Browse and license beats from Miiir — Bay Area producer with 107M+ streams. Monthly deals: $70 leases, $60 each for two or more, and $400 custom exclusives.",
   openGraph: {
-    title: "415miiir Beats",
-    description: "Premium beats from 415miiir. 107M+ streams. Bay Area.",
+    title: "Miiir Beats",
+    description: "Beats and custom production from Miiir. Monthly lease and custom-exclusive deals.",
     type: "website",
   },
 };

@@ -58,8 +58,8 @@ export default function Hero() {
         </div>
 
         {/* Main title */}
-        <h1 className="text-[3.25rem] xs:text-[4rem] sm:text-[8rem] lg:text-[10rem] font-bold tracking-[-0.05em] leading-[0.85] mb-4 sm:mb-6 animate-fade-up delay-200">
-          <span className="text-accent">415miiir</span>
+        <h1 className="text-[5rem] xs:text-[6rem] sm:text-[8rem] lg:text-[10rem] font-bold tracking-[-0.05em] leading-[0.85] mb-4 sm:mb-6 animate-fade-up delay-200">
+          <span className="text-accent">Miiir</span>
         </h1>
 
         <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 sm:gap-12 mb-8 sm:mb-14">
@@ -69,9 +69,10 @@ export default function Hero() {
               107M+ streams. 200+ placements. 46M+ views — in 2025 alone.<br />
               Get the sound you need.
             </p>
-            <p className="text-[10px] text-muted/40 leading-relaxed mb-5 italic">
-              *Doesn&rsquo;t count the ones ripping YouTube beats because they can&rsquo;t afford them.
-            </p>
+            <a href="#licensing" className="inline-flex items-center gap-2 text-xs font-semibold text-[#a2ef78] my-4">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#a2ef78]" />
+              Deals all month · Leases from $60 each ↗
+            </a>
             <div className="flex gap-3">
               <a
                 href="#beats"
@@ -83,7 +84,7 @@ export default function Hero() {
                 href="#licensing"
                 className="flex-1 sm:flex-none px-6 py-3 border border-border text-foreground/60 rounded-sm hover:bg-surface-light active:scale-[0.98] transition-all text-sm uppercase tracking-wider text-center"
               >
-                Licensing
+                View Deals
               </a>
             </div>
           </div>
